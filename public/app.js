@@ -7,7 +7,7 @@
 // .then(data=>console.log(data));
 
 
-const current = fetch('http://api.weatherapi.com/v1/current.json?key=d3ae7b0e9c79428eaca92717241510&q=London&aqi=no')
+const current = fetch('http://api.weatherapi.com/v1/current.json?key=d3ae7b0e9c79428eaca92717241510&q=Dhaka&aqi=no')
 .then(response=>response.json())
 .then(data=>{
     console.log(data);
@@ -19,5 +19,9 @@ const current = fetch('http://api.weatherapi.com/v1/current.json?key=d3ae7b0e9c7
     const temperature = data.current.temp_c;
     const wind_kph = data.current.wind_kph;
 
-    // document.getElementById('city-name').innerHTML = cityName;
+    document.getElementById('cityName').innerHTML = cityName;
+    document.getElementById('country').innerHTML = country;
+    document.getElementById('localTime').innerHTML = localTime;
+    document.getElementById('humidity').innerHTML = humidity;
+    document.getElementById('windKph').innerHTML = wind_kph;
 })
