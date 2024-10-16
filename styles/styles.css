@@ -1,28 +1,29 @@
-*{
+* {
     margin: 0px;
     padding: 0px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-.Weather{
+.Weather {
     display: flex;
     align-items: center;
-    justify-content:space-between;
+    justify-content: space-around;
     gap: 50px;
 }
 
-#searchLocation{
+#searchLocation {
     font-weight: 600;
     padding: 10px;
     outline: none;
     border-radius: 10px;
-    margin-left: 20px;
+    /* margin-left: 20px; */
+    margin: 0px auto;
     background: rgb(213, 220, 219);
 }
 
-.Weather-container{
-    width: fit-content;
-    background:  rgb(69, 190, 188);
+.Weather-container {
+    width: 80%;
+    background: rgb(69, 190, 188);
     border: 2px solid black;
     padding: 20px;
     margin: 50px auto;
@@ -30,7 +31,7 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-button{
+button {
     padding: 10px;
     border-radius: 10px;
     margin-left: 20px;
@@ -43,69 +44,89 @@ button{
     transition: ease-in 0.5s;
 }
 
-button:hover{
-    background: rgb(190, 247, 239);;
+button:hover {
+    background: rgb(190, 247, 239);
+    ;
     color: black;
 }
 
-.search-city{
+.search-city {
     margin: 0px 0px 20px 0px;
 }
 
-.humidity, .wind{
+.humidity,
+.wind {
     font-weight: 600;
 }
 
-#humidity, #windKph{
+#humidity,
+#windKph {
     font-weight: 400;
 }
 
-#localTime{
+#localTime {
     font-size: medium;
 }
 
-.temperature{
+.temperature {
     font-weight: 800;
     font-size: 70px;
+    margin: 0px 0px 0px 100px;
 }
 
-.condition{
+.condition {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin: 0;
+    margin-left: 170px;
+    margin-top: 0px;
 }
 
-#condition-weather{
+#condition-weather {
     font-size: large;
     font-weight: 400;
 }
 
-.location{
+.location {
     margin-top: 20px;
 }
 
-.localTime{
+.localTime {
     margin-top: 10px;
 }
 
 
-#forecast{
+#forecast {
     display: grid;
-    grid-template-columns: repeat(2,1fr);
+    grid-template-columns: repeat(3, 1fr);
     border: 1px solid rgb(83, 83, 91);
     border-radius: 10px;
     padding: 10px;
     gap: 10px;
 }
 
-.forecast-title{
+.forecast-title {
     margin: 5px 0px 10px 5px;
 }
 
-.forecastContainer{
+.forecastContainer {
     border: 1px solid black;
-    padding: 5px;
+    padding: 15px;
     border-radius: 10px;
     background: rgb(233, 230, 230);
+}
+
+
+@media (min-width: 450px) and (max-width: 800px) {
+    #forecast {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+@media (min-width: 800px) and (max-width: 1000px) {
+    #forecast {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
 }

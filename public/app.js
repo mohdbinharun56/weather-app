@@ -104,13 +104,11 @@ const forecast = (cityName = "Dhaka") => {
 }
 
 
-current();
-// forecast();
-
 function weather() {
     const cityName = document.getElementById('searchLocation').value;
     current(cityName);
     forecast(cityName);
 }
 
+current();
 
