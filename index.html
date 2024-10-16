@@ -8,16 +8,26 @@
     <script src="public/app.js"></script>
 </head>
 <body>
-    <div class="Weather-container">
-        <div class="">
-            <h1 id="cityName">--</h1>
-            <h3 id="country">--</h3>
-            <small id="localTime">--</small>
+    <div class="Weather-container"> 
+        <div class="search-city">
+            <input type="text" name="search" id="searchLocation" placeholder="Search for location">
+            <button onclick="weather()">Submit</button>
         </div>
-        <div>
-            <p>Humidity:  <span id="humidity">--</span>%</p>
-            <p>Wind: <span id="windKph">--</span> Kph</p>
+        <div class="Weather">
+            <div class="location">
+                <h1 id="cityName">--</h1>
+                <h3 id="country">--</h3>
+            </div>
+            <div>
+                <p class="humidity">Humidity:  <span id="humidity">--</span> %</p>
+                <p class="wind">Wind: <span id="windKph">--</span> Kph</p>
+            </div>
         </div>
+
+        <div class="temperature">
+            <h1 class="temperature"><span id="temperature">--</span><span>&deg;C</span></h1>
+        </div>
+        <small id="localTime">--</small>
     </div>
 </body>
 </html>
