@@ -28,11 +28,11 @@ const current = (cityName = 'Dhaka') => {
             document.getElementById('icon').src = condition.icon;
 
 
-            
+
         })
-        
+
         .catch(error => console.log('Error fetching weather data: ', error));
-        forecast();
+    forecast();
 }
 
 
@@ -51,23 +51,24 @@ const forecast = (cityName = "Dhaka") => {
             document.getElementById('forecast').innerHTML = '';
             forecastday.map((forecast) => {
                 // console.log(idx,forecast.day);
-                // const forecastContainer = document.getElementById('forecast');
+
                 const { date, day } = forecast;
 
-                const { avghumidity, avgtemp_c, condition, maxtemp_c } = day;
-                const { text,icon} = condition;
-
                 // console.log(day)
-                // document.getElementById('forecast').innerHTML = '';
+
+                const { avghumidity, avgtemp_c, condition, maxtemp_c } = day;
+                const { text, icon } = condition;
 
                 const forecastContainer = document.createElement('div');
 
                 const dateElement = document.createElement('p');
-                const averageHumidityElement = document.createElement('p'); 
-                const averageTemparatureElement = document.createElement('p'); 
+                const averageHumidityElement = document.createElement('p');
+                const averageTemparatureElement = document.createElement('p');
                 const maxTemparatureElement = document.createElement('p');
                 const textElement = document.createElement('p');
                 const iconElement = document.createElement('img');
+
+                const dayElement = document.createElement('p');
 
                 const dateContainer = document.createElement('div');
                 iconElement.classList.add('iconElement')
@@ -77,13 +78,14 @@ const forecast = (cityName = "Dhaka") => {
                 iconElement.src = icon;
                 dateElement.innerHTML = date;
                 textElement.innerHTML = text;
-                averageHumidityElement.innerHTML ="Humidity: "+avghumidity+"";
-                averageTemparatureElement.innerHTML = "avgTemperature:"+ avgtemp_c+"&deg;C";
-                maxTemparatureElement.innerHTML = "maxTemperature:"+maxtemp_c+"&deg;C";
+                averageHumidityElement.innerHTML = "Humidity: " + avghumidity + "";
+                averageTemparatureElement.innerHTML = "avgTemperature:" + avgtemp_c + "&deg;C";
+                maxTemparatureElement.innerHTML = "maxTemperature:" + maxtemp_c + "&deg;C";
 
-                
+
                 forecastContainer.appendChild(iconElement);
                 forecastContainer.appendChild(dateElement);
+                forecastContainer.appendChild(dayElement);
                 forecastContainer.appendChild(textElement);
                 forecastContainer.appendChild(averageHumidityElement);
                 forecastContainer.appendChild(averageTemparatureElement);
@@ -91,7 +93,6 @@ const forecast = (cityName = "Dhaka") => {
 
                 forecastContainer.classList.add('forecastContainer');
 
-                // document.getElementById('forecast').innerHTML = '';
                 document.getElementById('forecast').appendChild(forecastContainer);
 
 
@@ -111,4 +112,3 @@ function weather() {
 }
 
 current();
-
