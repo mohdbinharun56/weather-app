@@ -1,114 +1,78 @@
+const API_KEY = 'd3ae7b0e9c79428eaca92717241510';
+const DEFAULT_CITY = 'Dhaka';
 
-const current = (cityName = 'Dhaka') => {
-    fetch(`http://api.weatherapi.com/v1/current.json?key=d3ae7b0e9c79428eaca92717241510&q=${cityName}&aqi=no`)
-        .then(response => response.json())
-        .then(data => {
-            if (!data) {
-                throw new Error(`Data not found!`);
+const current = (cityName = DEFAULT_CITY) => {
+    fetch(`https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${cityName}&aqi=no`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
-
-            console.log(data);
+            return response.json();
+        })
+        .then(data => {
             const { location, current } = data;
             const { name, country, localtime } = location;
-            const { humidity, temp_c, wind_kph, condition, } = current;
+            const { humidity, temp_c, wind_kph, condition } = current;
 
-            const cityName = name;
-            const date = new Date();
-            const dayOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-            const day = dayOfWeek[date.getDay()];
-
-            document.getElementById('cityName').innerHTML = cityName;
-            document.getElementById('country').innerHTML = country;
-            document.getElementById('localTime').innerHTML = localtime;
-            document.getElementById('day').innerHTML = day;
-            document.getElementById('humidity').innerHTML = humidity;
-            document.getElementById('windKph').innerHTML = wind_kph;
-            document.getElementById('temperature').innerHTML = temp_c;
-            document.getElementById('condition-weather').innerHTML = condition.text;
+            document.getElementById('cityName').textContent = name;
+            document.getElementById('country').textContent = country;
+            document.getElementById('localTime').textContent = localtime;
+            document.getElementById('day').textContent = getDayOfWeek();
+            document.getElementById('humidity').textContent = humidity;
+            document.getElementById('windKph').textContent = wind_kph;
+            document.getElementById('temperature').textContent = temp_c;
+            document.getElementById('condition-weather').textContent = condition.text;
             document.getElementById('icon').src = condition.icon;
-
-
-
         })
-
         .catch(error => console.log('Error fetching weather data: ', error));
-    forecast();
-}
+    
+    forecast(cityName);
+};
 
-
-const forecast = (cityName = "Dhaka") => {
-    fetch(`http://api.weatherapi.com/v1/forecast.json?key=d3ae7b0e9c79428eaca92717241510&q=${cityName}&days=5&aqi=no&alerts=no`)
-        .then(response => response.json())
-        .then(data => {
-            if (!data) {
-                throw new Error(`Data not found!`);
+const forecast = (cityName = DEFAULT_CITY) => {
+    fetch(`https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${cityName}&days=5&aqi=no&alerts=no`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
+            return response.json();
+        })
+        .then(data => {
+            const { forecastday } = data.forecast;
+            const forecastContainer = document.getElementById('forecast');
+            forecastContainer.innerHTML = ''; 
 
-            // console.log(data);
-            const { forecast } = data;
-            const { forecastday } = forecast;
-            // console.log(forecastday);
-            document.getElementById('forecast').innerHTML = '';
-            forecastday.map((forecast) => {
-                // console.log(idx,forecast.day);
-
-                const { date, day } = forecast;
-
-                // console.log(day)
-
+            forecastday.forEach(({ date, day }) => {
                 const { avghumidity, avgtemp_c, condition, maxtemp_c } = day;
                 const { text, icon } = condition;
 
-                const forecastContainer = document.createElement('div');
+                const forecastDiv = document.createElement('div');
+                forecastDiv.classList.add('forecastContainer');
 
-                const dateElement = document.createElement('p');
-                const averageHumidityElement = document.createElement('p');
-                const averageTemparatureElement = document.createElement('p');
-                const maxTemparatureElement = document.createElement('p');
-                const textElement = document.createElement('p');
-                const iconElement = document.createElement('img');
+                forecastDiv.innerHTML = `
+                    <img class="iconElement" src="${icon}" alt="${text}">
+                    <p class="dateElement">${date}</p>
+                    <p>${text}</p>
+                    <p>Humidity: ${avghumidity}%</p>
+                    <p>Avg Temperature: ${avgtemp_c}&deg;C</p>
+                    <p>Max Temperature: ${maxtemp_c}&deg;C</p>
+                `;
 
-                const dayElement = document.createElement('p');
-
-                const dateContainer = document.createElement('div');
-                iconElement.classList.add('iconElement')
-                dateElement.classList.add('dateElement');
-
-                dateContainer.appendChild(dateElement);
-                iconElement.src = icon;
-                dateElement.innerHTML = date;
-                textElement.innerHTML = text;
-                averageHumidityElement.innerHTML = "Humidity: " + avghumidity + "";
-                averageTemparatureElement.innerHTML = "avgTemperature:" + avgtemp_c + "&deg;C";
-                maxTemparatureElement.innerHTML = "maxTemperature:" + maxtemp_c + "&deg;C";
-
-
-                forecastContainer.appendChild(iconElement);
-                forecastContainer.appendChild(dateElement);
-                forecastContainer.appendChild(dayElement);
-                forecastContainer.appendChild(textElement);
-                forecastContainer.appendChild(averageHumidityElement);
-                forecastContainer.appendChild(averageTemparatureElement);
-                forecastContainer.appendChild(maxTemparatureElement);
-
-                forecastContainer.classList.add('forecastContainer');
-
-                document.getElementById('forecast').appendChild(forecastContainer);
-
-
-
-            })
-
-
+                forecastContainer.appendChild(forecastDiv);
+            });
         })
         .catch(error => console.log('Error fetching weather data: ', error));
-}
+};
 
+const getDayOfWeek = () => {
+    const date = new Date();
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    return days[date.getDay()];
+};
 
 function weather() {
     const cityName = document.getElementById('searchLocation').value;
     current(cityName);
-    forecast(cityName);
 }
 
 current();
